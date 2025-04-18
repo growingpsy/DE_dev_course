@@ -1,0 +1,17 @@
+# 가상환경
+venv/
+DjangoProjects/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# 환경 파일
+.env
+
+# SQLite DB
+*.sqlite3
+
+# IDE
+.vscode/
+.idea/
