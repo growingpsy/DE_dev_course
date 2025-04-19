@@ -1,5 +1,6 @@
 from django.db import models
-
+from django.utils import timezone
+import datetime
 # Create your models here.
 # 모델 생성
 # 모델을 테이블에 사용하기 위한 마이그레이션을 만든다
@@ -9,7 +10,14 @@ class Question(models.Model):
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField(auto_now_add=True)
 
+    def was_published_recently(self):
+        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+
     def __str__(self):
+        if self.was_published_recently():
+            new_badge = 'NEW!!!'
+        else:
+            new_badge = ''
         return f'제목: {self.question_text}, 날짜: {self.pub_date}'
 
 class Choice(models.Model):
