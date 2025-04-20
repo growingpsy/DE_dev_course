@@ -1,6 +1,5 @@
 from django.contrib import admin
 from .models import Choice, Question
-# Register your models here.
 
 admin.site.register(Choice)
 
@@ -15,5 +14,7 @@ class QuestionAdmin(admin.ModelAdmin):
     ]
     readonly_fields = ['pub_date']
     inlines = [ChoiceInline]
-
+    list_filter = ['pub_date']
+    search_fields = ['question_text', 'choice__choice_text']
+    
 admin.site.register(Question, QuestionAdmin)
