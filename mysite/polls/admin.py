@@ -1,6 +1,19 @@
 from django.contrib import admin
-from .models import *
+from .models import Choice, Question
 # Register your models here.
 
-admin.site.register(Question)
 admin.site.register(Choice)
+
+class ChoiceInline(admin.TabularInline):
+    model = Choice
+    extra = 3
+
+class QuestionAdmin(admin.ModelAdmin):
+    fieldsets = [
+        ('질문 섹션', {'fields': ['question_text']}),
+        ('생성일', {'fields': ['pub_date'], 'classes': ['collapse']}),        
+    ]
+    readonly_fields = ['pub_date']
+    inlines = [ChoiceInline]
+
+admin.site.register(Question, QuestionAdmin)
