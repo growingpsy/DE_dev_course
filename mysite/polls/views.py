@@ -10,3 +10,7 @@ def index(request):
 
 def some_url(request):
     return HttpResponse("Some_url 구현하기")
+
+def detail(request, question_id):
+    question = Question.objects.get(pk=question_id)
+    return render(request, 'polls/detail.html', {'question': question})
