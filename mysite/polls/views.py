@@ -4,6 +4,9 @@ from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.db.models import F
+from django.views import generic
+from django.urls import reverse_lazy
+from django.contrib.auth.forms import UserCreationForm
 
 def index(request):
     latest_question_list = Question.objects.order_by('-pub_date')[:5]
@@ -38,3 +41,8 @@ def vote(request, question_id):
 def result(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     return render(request, 'polls/result.html', {'question': question})
+
+class SignupView(generic.CreateView):
+    form_class = UserCreationForm             # 어떤 폼 쓸지 지정
+    success_url = reverse_lazy('user-list')   # 성공 후 이동 경로
+    template_name = 'registration/signup.html' # 사용할 템플릿 파일
